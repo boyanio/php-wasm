@@ -44,13 +44,16 @@
     matrixContainerEl.style.height = `${matrixElHeight + 30}px`;
   }
 
-  function colorCell(cellId, color) {
-    const { red, green, blue } = color;
-    const cellEl = document.getElementById(`cell_${cellId}`);
-    cellEl.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+  function fillSolution(solution, type) {
+    for (let i = 0; i < solution.length; i++) {
+      const cellEl = document.getElementById(`cell_${i}`);
+      if (cellEl.innerHTML === '' || cellEl.innerHTML.indexOf('span') >= 0) {
+        cellEl.innerHTML += `<span class="${type}">${solution[i]}</span>`;
+      }
+    }
   }
 
-  async function postData(url = '', data = {}) {
+  async function postData(url, data) {
     const response = await fetch(url, {
       method: 'POST',
       mode: 'cors',
@@ -62,32 +65,36 @@
     return await response.json();
   }
 
-  async function solveUsingPurePhp() {
-    const sudokuInput = "000200500640008000000100709006007003800030006300800100403002000000500017007009000";
+  async function solveUsingPurePhp(event, sudokuInput) {
     const response = await postData('sudoku-php.php', { input: sudokuInput });
     
     const status = `Solved in ${response.time}`;
     document.getElementById('solveUsingPurePhpStatus').innerText = status;
+
+    fillSolution(response.solution, 'php');
+    event.target.disabled = true;
   }
 
-  async function solveUsingWebAssembly() {
-    const sudokuInput = "000200500640008000000100709006007003800030006300800100403002000000500017007009000";
+  async function solveUsingWebAssembly(event, sudokuInput) {
     const response = await postData('sudoku-wasm.php', { input: sudokuInput });
     
     const status = `Solved in ${response.time}`;
     document.getElementById('solveUsingWebAssemblyStatus').innerText = status;
+
+    fillSolution(response.solution, 'wasm');
+    event.target.disabled = true;
   }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const parseUrlParam = (urlParam, defaultValue) => {
-    const value = parseInt(urlParams.get(urlParam), 10);
-    return isNaN(value) || value <= 0 ? defaultValue : value;
-  };
+  async function generateSudoku() {
+    const response = await postData('sudoku-generate.php', {});
+    createSudokuMatrix(response.sudoku);
 
-  document.getElementById('solveUsingPurePhpBtn').addEventListener('click', solveUsingPurePhp);
-  document.getElementById('solveUsingWebAssemblyBtn').addEventListener('click', solveUsingWebAssembly);
+    document.getElementById('solveUsingPurePhpBtn')
+      .addEventListener('click', (event) => solveUsingPurePhp(event, response.sudoku));
+    
+    document.getElementById('solveUsingWebAssemblyBtn')
+      .addEventListener('click', (event) => solveUsingWebAssembly(event, response.sudoku));
+  }
 
-  const sudokuInput = "000200500640008000000100709006007003800030006300800100403002000000500017007009000";
-  createSudokuMatrix(sudokuInput);
-
+  generateSudoku();
 })();

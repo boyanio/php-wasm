@@ -4,6 +4,10 @@ body {
   padding: none;
 }
 
+.container {
+  margin-top: 30px;
+}
+
 .jumbotron {
   padding: 2rem;
 }
@@ -35,4 +39,23 @@ body {
   border-bottom: 1px solid black;
   text-align: center;
   vertical-align: middle;
+}
+
+.cell span {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+.php {
+  background-color: #8892BF;
+}
+
+.wasm {
+  background-color: #654FF0;
+}
+
+h2.php, h2.wasm {
+  padding: 5px;
+  color: white;
 }
