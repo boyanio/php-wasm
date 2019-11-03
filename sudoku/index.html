@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sudoku Battle: WebAssembly vs. PHP</title>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="jumbotron">
+            <h1 class="display-4">Sudoku Battle</h1>
+            <p class="lead">
+              Solving sudoku puzzles using pure PHP and WebAssembly inside PHP.
+            </p>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="col-sm-6">
+                <button class="btn btn-primary btn-block" id="solveUsingPurePhpBtn">Solve using pure PHP</button>
+                <p>
+                  <h4 class="text-center" id="solveUsingPurePhpStatus"></h4>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary btn-block" id="solveUsingWebAssemblyBtn">Solve using WebAssembly</button>
+                <p>
+                  <h4 class="text-center" id="solveUsingWebAssemblyStatus"></h4>
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6" id="matrix-container">
+          <div id="matrix"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
