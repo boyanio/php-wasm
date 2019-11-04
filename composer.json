@@ -1,6 +1,6 @@
 {
     "name": "php-wasm/php-wasm",
-    "description": "PHP vs. WebAssembly demo",
+    "description": "Demo of WebAssembly in PHP",
     "type": "demo",
     "keywords": ["demo", "php", "webassembly", "wasm"],
     "homepage": "https://github.com/boyanio/php-wasm/",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Wasm\\": "lib/"
+            "Wasm\\": "php-ext-wasm/lib/"
         },
         "files": [
             "lib/Prelude.php"

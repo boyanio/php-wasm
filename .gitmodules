@@ -1,0 +1,3 @@
+[submodule "php-ext-wasm"]
+	path = php-ext-wasm
+	url = https://github.com/wasmerio/php-ext-wasm
