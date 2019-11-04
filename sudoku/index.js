@@ -66,7 +66,7 @@
   }
 
   async function solveUsingPurePhp(event, sudokuInput) {
-    const response = await postData('sudoku-php.php', { input: sudokuInput });
+    const response = await postData('service/sudoku-solve-php.php', { input: sudokuInput });
     
     const status = `Solved in ${response.time}`;
     document.getElementById('solveUsingPurePhpStatus').innerText = status;
@@ -76,7 +76,7 @@
   }
 
   async function solveUsingWebAssembly(event, sudokuInput) {
-    const response = await postData('sudoku-wasm.php', { input: sudokuInput });
+    const response = await postData('service/sudoku-solve-wasm.php', { input: sudokuInput });
     
     const status = `Solved in ${response.time}`;
     document.getElementById('solveUsingWebAssemblyStatus').innerText = status;
@@ -86,7 +86,7 @@
   }
 
   async function generateSudoku() {
-    const response = await postData('sudoku-generate.php', {});
+    const response = await postData('service/sudoku-generate.php', {});
     createSudokuMatrix(response.sudoku);
 
     document.getElementById('solveUsingPurePhpBtn')

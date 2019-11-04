@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 /**
  * Converts a two-dimensional array into a 9x9 string.
  * It replaces null with 0.
@@ -17,8 +21,6 @@ function sudoku_array_to_string($sudoku_array) {
     }
     return $sudoku_string;
 }
-
-require_once dirname(__DIR__) . '/vendor/abcaeffchen/sudoku-php/src/Sudoku.php';
 
 use AbcAeffchen\sudoku\Sudoku;
 

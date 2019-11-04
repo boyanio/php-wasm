@@ -16,10 +16,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Wasm\\": "php-ext-wasm/lib/"
+            "Wasm\\": "php-ext-wasm/lib/",
+            "AbcAeffchen\\sudoku\\": "vendor/abcaeffchen/sudoku-php/src/"
         },
         "files": [
-            "lib/Prelude.php"
+            "php-ext-wasm/lib/Prelude.php"
         ]
     }
 }
