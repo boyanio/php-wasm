@@ -29,7 +29,7 @@ $post_data = json_decode(file_get_contents('php://input'), true);
 
 // Write the 9x9 sudoku input to the wasm memory
 $sudoku_input_offset = 0;
-writeToWasmMemory($memory, $post_data['input'], $sudoku_input_offset);
+writeToWasmMemory($memory, $post_data['sudoku'], $sudoku_input_offset);
 
 $start_time = microtime(true);
 $pointer = $instance->_solve($sudoku_input_offset);

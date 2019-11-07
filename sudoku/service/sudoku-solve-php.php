@@ -45,7 +45,7 @@ function sudoku_array_to_string($sudoku_array) {
 use AbcAeffchen\sudoku\Sudoku;
 
 $post_data = json_decode(file_get_contents('php://input'), true);
-$task = sudoku_string_to_array($post_data['input']);
+$task = sudoku_string_to_array($post_data['sudoku']);
 
 $start_time = microtime(true);
 $solution = Sudoku::solve($task);

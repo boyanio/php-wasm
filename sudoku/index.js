@@ -65,35 +65,32 @@
     return await response.json();
   }
 
-  async function solveUsingPurePhp(event, sudokuInput) {
-    const response = await postData('service/sudoku-solve-php.php', { input: sudokuInput });
-    
-    const status = `Solved in ${response.time}`;
-    document.getElementById('solveUsingPurePhpStatus').innerText = status;
-
-    fillSolution(response.solution, 'php');
-    event.target.disabled = true;
-  }
-
-  async function solveUsingWebAssembly(event, sudokuInput) {
-    const response = await postData('service/sudoku-solve-wasm.php', { input: sudokuInput });
-    
-    const status = `Solved in ${response.time}`;
-    document.getElementById('solveUsingWebAssemblyStatus').innerText = status;
-
-    fillSolution(response.solution, 'wasm');
-    event.target.disabled = true;
+  async function solve(sudoku, how) {
+    const { solution, time } =
+      await postData(`service/sudoku-solve-${how}.php`, { sudoku });
+    const status = `Solved in ${time}`;
+    document.getElementById(`${how}Status`).innerText = status;
+    fillSolution(solution, how);
   }
 
   async function generateSudoku() {
-    const response = await postData('service/sudoku-generate.php', {});
-    createSudokuMatrix(response.sudoku);
+    const { sudoku } = await postData('service/sudoku-generate.php', {});
+    createSudokuMatrix(sudoku);
 
-    document.getElementById('solveUsingPurePhpBtn')
-      .addEventListener('click', (event) => solveUsingPurePhp(event, response.sudoku));
-    
-    document.getElementById('solveUsingWebAssemblyBtn')
-      .addEventListener('click', (event) => solveUsingWebAssembly(event, response.sudoku));
+    const handleSolveButtonClick = async (event, how) => {
+      event.target.disabled = true;
+      try {
+        await solve(sudoku, how);
+      } catch (err) {
+        alert(err);
+        event.target.disabled = false;
+      }
+    };
+
+    for (const how of ['php', 'wasm']) {
+      document.getElementById(`${how}SolveBtn`)
+        .addEventListener('click', async (event) => await handleSolveButtonClick(event, how));
+    }
   }
 
   generateSudoku();
