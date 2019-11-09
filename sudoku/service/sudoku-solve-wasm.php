@@ -32,7 +32,7 @@ $sudoku_input_offset = 0;
 writeToWasmMemory($memory, $post_data['sudoku'], $sudoku_input_offset);
 
 $start_time = microtime(true);
-$pointer = $instance->_solve($sudoku_input_offset);
+$pointer = $instance->solve($sudoku_input_offset);
 $time = microtime(true) - $start_time;
 
 // Read the resulted 9x9 string from the wasm memory
